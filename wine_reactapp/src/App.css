@@ -8,8 +8,12 @@
 .wine{
 
   display: inline-block;
-  width:170px;
+  width:220px;
   border:3px solid purple;
  padding:2px 10px;
+}
+.btn{
+  border : 3px solid black;
+  font-size: xx-large;
 }
 
