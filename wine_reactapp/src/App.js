@@ -16,7 +16,8 @@ constructor(props){
 
     winedata:[],
     picture:[],
-    id:[]
+    id:[],
+    winerender:[]
   }
   this.deletewine=this.deletewine.bind(this);
 }
@@ -26,7 +27,29 @@ async getData(){
 const response=await axios.get("https://myapi-profstream.herokuapp.com/api/07dab0/wines");
 this.setState({winedata:response.data})
 console.log(this.state.winedata)
-this.getPictures();
+
+
+let i=0;
+let elements=response.data.map(wine=>{
+  return(
+  <div>
+  <Link  to={`wine`+i}>
+<img src={wine.picture}/> 
+
+</Link >
+ <input type="button" name={wine.id} className="btn" value="X" onClick={this.deletewine}></input>
+ 
+<Route exact path="wine0" ><Wine1 winedata={wine[i]} /> </Route>
+
+
+</div>)
+{i++}
+})
+  console.log(elements)
+  this.setState({winerender:elements})
+  console.log(this.state.winerender)
+
+
   }
   catch(error){
 
@@ -90,11 +113,11 @@ render(){
          
         <div className="App">
         
+{this.state.winerender}
 
-{elem1()}
 
 
-<div>
+{/* <div>
  <Link to="/wine2">
 <img src={this.state.picture[1]}/>   
 </Link >
@@ -125,8 +148,8 @@ render(){
 <img src={this.state.picture[5]}/> 
 </Link>
 <input type="button" name={this.state.id[5]} className="btn" value="X" onClick={this.deletewine}></input>
-</div>
-<div>
+</div> */}
+{/* <div>
 <Link to="/wine1">
 <img src={this.state.picture[6]}/> 
 </Link>
@@ -137,7 +160,7 @@ render(){
 <img src={this.state.picture[7]}/> 
 </Link>  
 <input type="button" name={this.state.id[7]} className="btn" value="X" onClick={this.deletewine}></input> 
-</div>
+</div> */}
 
 
 
