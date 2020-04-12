@@ -65,26 +65,33 @@ this.getData();
 
 
 }  
-render(){
-  return (
-  
+render(){  
+  let elem1=()=>{
+    console.log("Are u coming here out")
+  if(this.state.picture[0]!==undefined)
+  {
+    console.log("Are u coming here insi")
+      return(
+    <div>
     
-      <Router>
-            <h1 > WineStore </h1>
-        <div className="App">
-        
-     <div>
-     
-        <Link  to="/wine1">
+       <Link  to="/wine1">
 <img src={this.state.picture[0]}/> 
 
 </Link >
 <input type="button" name={this.state.id[0]} className="btn" value="X" onClick={this.deletewine}></input>
 <Route exact path="/wine1"><Wine1 winedetail={this.state.winedata} /></Route> 
 
-</div>
+</div>);}}
+  return (
+    
+  
+    
+      <Router>
+         
+        <div className="App">
+        
 
-
+{elem1()}
 
 
 <div>
