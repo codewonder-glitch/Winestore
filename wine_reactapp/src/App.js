@@ -18,15 +18,15 @@ constructor(props){
     picture:[],
     id:[],
     winerender:[],
-    name1:null,
-    year:null,
-    grapes:null,
-    cpic:null,
-    price:null,
-    description:null,
-    country:null,
-    region:null,
-    ceate:null
+    name1:" ",
+    year:" ",
+    grapes:" ",
+    cpic:" ",
+    price:" ",
+    description:" ",
+    country:" ",
+    region:" ",
+    ceate:" "
   }
   this.deletewine=this.deletewine.bind(this);
   this.handleChange = this.handleChange.bind(this);
