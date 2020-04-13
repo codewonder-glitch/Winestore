@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
-import Wine1 from './Components/Wine1'
+
 
 class App extends Component {
 constructor(props){
@@ -17,11 +17,28 @@ constructor(props){
     winedata:[],
     picture:[],
     id:[],
-    winerender:[]
+    winerender:[],
+    name1:null,
+    year:null,
+    grapes:null,
+    cpic:null,
+    price:null,
+    description:null,
+    country:null,
+    region:null,
+    ceate:null
   }
   this.deletewine=this.deletewine.bind(this);
+  this.handleChange = this.handleChange.bind(this);
+  this.handleCreate = this.handleCreate.bind(this);
+
 }
 
+handleChange(event) {
+  this.setState({[event.target.name]: event.target.value})
+  // this.setState({Breed: event.target.Breed});
+  console.log(event.target.name,event.target.value)
+}
 async getData(){
   try{
 const response=await axios.get("https://myapi-profstream.herokuapp.com/api/07dab0/wines");
@@ -45,8 +62,7 @@ let elements=response.data.map(wine=>{
 </div>)
 {i++}
 })
-  console.log(elements)
-  this.setState({winerender:elements})
+    this.setState({winerender:elements})
   console.log(this.state.winerender)
 
 
@@ -68,6 +84,26 @@ console.log("delete entered",event.target.name)
       })
       this.getData();
 }
+
+handleCreate=event=>{
+  console.log("create entered",event.target.name)
+    console.log(this.state)
+      event.preventDefault();
+  
+      axios.post('https://myapi-profstream.herokuapp.com/api/07dab0/wines', {
+        name: this.state.name1,
+        year: this.state.year,
+        grapes:this.state.grapes,
+        country:this.state.country,
+        region:this.state.region,
+        description:this.state.description,
+        picture:this.state.cpic,
+        price:this.state.price
+      })
+      this.getData();
+  }
+
+  
 
 getPictures(){
   let pic=[];
@@ -110,12 +146,73 @@ render(){
   
     
       <Router>
-         
+             <h1>WineStore</h1>
         <div className="App">
-        
+    
 {this.state.winerender}
 
+<form id="form1" onSubmit={this.handleChange}>
+        
+        <label>  
+        Name: 
+          <br />
+          <input name="name1" type="text"  value={this.state.name1} onChange={this.handleChange}/>
+          </label>
+          <br />
+          <label>
+        Year:
+            <br />
+          <input name="year" type="text"  value={this.state.year} onChange={this.handleChange}/>
+          </label>
+          <br />
+          <label> 
+         Grapes:
+          <br />
+          <input name="grapes" type="text"  value={this.state.grapes} onChange={this.handleChange}/>
+          </label>
+          <br />
+          <label> 
+          Country:
+          <br />
+          <input name="country" type="text"  value={this.state.country} onChange={this.handleChange}/>
+          </label>
+          <br />
+          
+          <label> 
+          Region:
+          <br />
+          <input name="region" type="text"  value={this.state.region} onChange={this.handleChange}/>
+          </label>
+          <br />
+          <label> 
+          Description:
+          <br />
+          <input name="description" type="text"  value={this.state.description} onChange={this.handleChange}/>
+          </label>
+          <br />
+        
+          <label> 
+          Picture:
+          <br />
+          <input name="cpic" type="text"  value={this.state.cpic} onChange={this.handleChange}/>
+          </label>
 
+          <br />
+          <label>
+          Price:
+          <br />
+          <input name="price" type="text"  value={this.state.price} onChange={this.handleChange}/>
+          </label>
+
+         
+          <br />
+          <label>
+          
+          <br />
+          <input id="create" name="create" type="button"  value="Create" onClick={this.handleCreate}/>
+          </label>
+          
+          </form>
 
 {/* <div>
  <Link to="/wine2">
@@ -172,10 +269,10 @@ render(){
 }
 }
 
- function Wine2(props)
+ function Wine1(props)
 {
     var wine=[];
-    wine=props.winedetail[1];
+    wine=props.winedetail;
     if(wine===undefined)
     return;
     console.log(wine);
