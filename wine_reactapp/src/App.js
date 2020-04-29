@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import axios from 'axios';
+import Wine1 from './Components/Winedetail';
 import './App.css';
 
 
@@ -43,19 +44,23 @@ async getData(){
 const response=await axios.get("https://myapi-profstream.herokuapp.com/api/07dab0/wines");
 this.setState({winedata:response.data})
 console.log(this.state.winedata)
-let i=-1;
-let elements=this.state.winedata.map(wine=>{
-  {i++}
+
+let elements=this.state.winedata.map((wine,i)=>{
+
   return(
   <div>
 
-<Link  to={`wine`+i}>
+<input type="button" name={wine.id} className="btn" value="X" onClick={this.deletewine}></input>
+
+<Link  to={`/wine`+i}>
+  
 <img src={wine.picture}/> 
+
 </Link >
- 
- <input type="button" name={wine.id} className="btn" value="X" onClick={this.deletewine}></input>
- 
-<Route exact path={`wine`+i} ><Wine1 winedata={wine[i]} /> </Route>
+
+ <Route exact path={`/wine`+i} ><Wine1 winedetail={wine}/> </Route> 
+
+
 
 </div>)
 
@@ -110,14 +115,13 @@ this.getData();
 render(){  
     
   return (
+    <div className="wrapper">
+     <h1>WineStore</h1> 
+    <div className="App">
     
-  
     <Router>
-   
-        <h1>WineStore</h1>
-        <div className="App">
-    
         {this.state.winerender}
+    </Router>
 
       <form id="form1" onSubmit={this.handleChange}>
         
@@ -185,28 +189,12 @@ render(){
         </form>
 
     </div>
-    </Router>
+    </div>
 
     );
     }
 }
 
- function Wine1(props)
-{
-    var wine=[];
-    wine=props.winedetail;
-    if(wine===undefined)
-    return;
-    console.log(wine);
-    return(
-        <div key={wine["id"]} className="wine" tabIndex="1" >
-          <h4>{wine["name"]} ({wine["year"]})</h4>
-          <h4>{wine["grapes"]}</h4>
-          <h4>{wine["country"], wine["region"]}</h4>
-          <p>{wine["description"]}</p>
-        </div>  
-    );
-}
-
+ 
 
 export default App;
